@@ -1,16 +1,34 @@
-const express = require("express");
+const express = require('express')
+const mongoose = require('mongoose')
+const ShortUrl = require('./models/shortUrl')
+const app = express()
 
+mongoose.connect('mongodb+srv://aakashvani:1234@cluster0.fitiw.mongodb.net/?retryWrites=true&w=majority', {
+  useNewUrlParser: true, useUnifiedTopology: true
+})
 
+app.set('view engine', 'ejs')
+app.use(express.urlencoded({ extended: false }))
 
-const app = express();
+app.get('/', async (req, res) => {
+  const shortUrls = await ShortUrl.find()
+  res.render('index', { shortUrls: shortUrls })
+})
 
+app.post('/shortUrls', async (req, res) => {
+  await ShortUrl.create({ full: req.body.fullUrl })
 
-app.set('view engine', 'ejs');
+  res.redirect('/')
+})
 
-app.get('/', (req,res)=>{
-    res.render("index");
-});
+app.get('/:shortUrl', async (req, res) => {
+  const shortUrl = await ShortUrl.findOne({ short: req.params.shortUrl })
+  if (shortUrl == null) return res.sendStatus(404)
 
+  shortUrl.clicks++
+  shortUrl.save()
 
+  res.redirect(shortUrl.full)
+})
 
 app.listen(process.env.PORT || 5000);
