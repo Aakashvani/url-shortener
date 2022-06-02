@@ -17,4 +17,5 @@ A URL shortener will require two primary API endpoints. The first one will be a 
  - [How to Design a Scalable URL Shortener System](https://blog.bitsrc.io/must-read-and-lets-read-url-shortener-system-82c06424e770)
  - [Awesome README](https://github.com/matiassingers/awesome-readme)
  - [Akshay Kumar](https://github.com/Akshay-Singh-Rajput)
+ - [Web dev simplified](https://www.youtube.com/watch?v=SLpUKAGnm-g&t=318s)
 
